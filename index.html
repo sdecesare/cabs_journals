@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Search and filter the Academic Journal Guide (ABS/AJG) 2024 journal list." />
+  <title>ABS Journal Guide Explorer 2024</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="shell nav-wrap">
+      <a class="brand" href="#" aria-label="ABS Journal Guide Explorer home">
+        <span class="brand-mark">AJG</span>
+        <span>Journal Explorer</span>
+      </a>
+      <a class="github-link" href="https://github.com/" target="_blank" rel="noreferrer">GitHub-ready</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="shell hero-inner">
+        <p class="eyebrow">Academic Journal Guide · 2024</p>
+        <h1>Find a journal in seconds.</h1>
+        <p class="hero-copy">Search the ABS/AJG 2024 list by journal title, ISSN, publisher or field, then narrow results by subject and rating.</p>
+
+        <div class="search-card" role="search">
+          <label class="search-box" for="searchInput">
+            <span class="search-icon" aria-hidden="true">⌕</span>
+            <input id="searchInput" type="search" autocomplete="off" placeholder="Search journal title, ISSN, publisher or field…" />
+            <kbd>/</kbd>
+          </label>
+          <div class="filters">
+            <label>
+              <span>Field</span>
+              <select id="fieldFilter"><option value="">All fields</option></select>
+            </label>
+            <label>
+              <span>AJG 2024</span>
+              <select id="ratingFilter">
+                <option value="">All ratings</option>
+                <option value="4*">4*</option>
+                <option value="4">4</option>
+                <option value="3">3</option>
+                <option value="2">2</option>
+                <option value="1">1</option>
+              </select>
+            </label>
+            <label>
+              <span>Sort</span>
+              <select id="sortSelect">
+                <option value="rating-desc">Rating: high to low</option>
+                <option value="title-asc">Journal: A–Z</option>
+                <option value="field-asc">Field: A–Z</option>
+              </select>
+            </label>
+            <button id="resetButton" class="reset-button" type="button">Reset</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="shell results-section">
+      <div class="results-bar">
+        <div>
+          <strong id="resultCount">1,822 journals</strong>
+          <span id="resultContext">in the 2024 guide</span>
+        </div>
+        <div class="legend" aria-label="Rating legend">
+          <span class="badge rank-4star">4*</span><span>World elite</span>
+          <span class="badge rank-4">4</span><span>Top</span>
+          <span class="badge rank-3">3</span><span>Highly regarded</span>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Journal</th>
+              <th>Field</th>
+              <th>Publisher</th>
+              <th class="center">AJG 2024</th>
+              <th class="center historical">2021</th>
+              <th>ISSN</th>
+              <th class="center">Links</th>
+            </tr>
+          </thead>
+          <tbody id="resultsBody"></tbody>
+        </table>
+        <div id="emptyState" class="empty-state" hidden>
+          <div class="empty-icon">⌕</div>
+          <h2>No matching journals</h2>
+          <p>Try a broader search or reset the filters.</p>
+          <button type="button" id="emptyReset">Reset filters</button>
+        </div>
+      </div>
+
+      <div class="pagination" id="pagination">
+        <button id="prevPage" type="button">← Previous</button>
+        <span id="pageInfo">Page 1</span>
+        <button id="nextPage" type="button">Next →</button>
+      </div>
+
+      <aside class="source-note">
+        <h2>About this explorer</h2>
+        <p>This is a simple browser for the supplied Academic Journal Guide / ABS journal list. Ratings are displayed on the familiar AJG scale, where the source value 5 is shown as 4*. Historical ratings and external profile links are included when available.</p>
+        <p class="small">Independent search interface; not affiliated with or endorsed by the Chartered Association of Business Schools. Verify important publication decisions against the official source.</p>
+      </aside>
+    </section>
+  </main>
+
+  <footer>
+    <div class="shell">Built as a static site for GitHub Pages · No login · No tracking · No backend</div>
+  </footer>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
