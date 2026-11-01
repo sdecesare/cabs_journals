@@ -14,5 +14,13 @@
   function saveBlob(blob,name){const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},1000);}
 
   csvBtn.addEventListener('click',async()=>{const {headers,rows}=exportRows(await getData());const csv='\uFEFF'+[headers,...rows].map(r=>r.map(csvEscape).join(',')).join('\r\n');saveBlob(new Blob([csv],{type:'text/csv;charset=utf-8'}),'ABS_AJG_2024_journal_list.csv');menu.hidden=true;});
-  xlsxBtn.addEventListener('click',async()=>{const {headers,rows}=exportRows(await getData());if(!window.XLSX){alert('Excel library could not load. Please use the CSV download instead.');return;}const ws=XLSX.utils.aoa_to_sheet([headers,...rows]);const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'AJG 2024');XLSX.writeFile(wb,'ABS_AJG_2024_journal_list.xlsx');menu.hidden=true;});
+  xlsxBtn.addEventListener('click',()=>{
+    const a=document.createElement('a');
+    a.href='./CABS-AJG-2024.xlsx';
+    a.download='CABS-AJG-2024.xlsx';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    menu.hidden=true;
+  });
 })();
