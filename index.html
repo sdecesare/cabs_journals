@@ -25,12 +25,12 @@
       <div class="shell hero-inner">
         <p class="eyebrow">Academic Journal Guide · 2024</p>
         <h1>Find a journal in seconds.</h1>
-        <p class="hero-copy">Search the ABS/AJG 2024 list by journal title or field, then narrow results by subject and rating.</p>
+        <p class="hero-copy">Search the ABS/AJG 2024 list by journal title, ISSN, publisher or field, then narrow results by subject and rating.</p>
 
         <div class="search-card" role="search">
           <label class="search-box" for="searchInput">
             <span class="search-icon" aria-hidden="true">⌕</span>
-            <input id="searchInput" type="search" autocomplete="off" placeholder="Search journal title or field…" />
+            <input id="searchInput" type="search" autocomplete="off" aria-label="Search journal title, ISSN, publisher or field" placeholder="Search title, ISSN, publisher or field…" />
             <kbd>/</kbd>
           </label>
           <div class="filters">
@@ -76,15 +76,15 @@
             <span class="badge rank-3">3</span><span>Highly regarded</span>
           </div>
           <div class="download-actions" aria-label="Download ABS/AJG 2024 list">
-            <button id="downloadCsv" class="download-button" type="button">Download CSV</button>
-            <a class="download-button download-link" href="CABS-AJG-2024.xlsx" download>Download Excel</a>
+            <a id="downloadCsv" class="download-button download-link" href="./CABS-AJG-2024.csv" download>Download CSV</a>
+            <a class="download-button download-link" href="./CABS-AJG-2024.xlsx" download>Download Excel</a>
           </div>
         </div>
       </div>
 
       <div id="loadError" class="load-error" hidden>
         <strong>Could not load the journal list.</strong>
-        <p>Check your internet connection and reload the page. The app loads its AJG 2024 dataset from a public GitHub-hosted CSV.</p>
+        <p>Reload the page to try loading the journal list again.</p>
       </div>
 
       <div class="table-wrap">

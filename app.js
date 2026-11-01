@@ -3,7 +3,6 @@
   const searchInput=$('searchInput'), fieldFilter=$('fieldFilter'), ratingFilter=$('ratingFilter'), sortSelect=$('sortSelect');
   const resetButton=$('resetButton'), resultsBody=$('resultsBody'), resultCount=$('resultCount'), resultContext=$('resultContext');
   const prevPage=$('prevPage'), nextPage=$('nextPage'), pageInfo=$('pageInfo'), emptyState=$('emptyState'), emptyReset=$('emptyReset'), loadError=$('loadError');
-  const downloadCsv=$('downloadCsv');
   const PAGE_SIZE=30;
   let journals=[], filtered=[], page=1;
 
@@ -18,7 +17,7 @@
   function applyFilters(resetPage=true){
     if(resetPage) page=1;
     const q=searchInput.value.trim().toLowerCase(), field=fieldFilter.value, rating=ratingFilter.value;
-    filtered=journals.filter(j=>(!q || `${j.title} ${j.field}`.toLowerCase().includes(q)) && (!field||j.field===field) && (!rating||j.rating2024===rating));
+    filtered=journals.filter(j=>(!q || `${j.title} ${j.field} ${j.printIssn} ${j.eIssn} ${j.publisher}`.toLowerCase().includes(q)) && (!field||j.field===field) && (!rating||j.rating2024===rating));
     const sort=sortSelect.value;
     filtered.sort((a,b)=> sort==='title-asc' ? a.title.localeCompare(b.title) : sort==='field-asc' ? (a.field||'').localeCompare(b.field||'') || a.title.localeCompare(b.title) : rankValue(b.rating2024)-rankValue(a.rating2024) || a.title.localeCompare(b.title));
     render();
@@ -34,25 +33,8 @@
   }
   function reset(){ searchInput.value='';fieldFilter.value='';ratingFilter.value='';sortSelect.value='rating-desc';applyFilters(); }
 
-  function csvEscape(value){
-    const s=String(value ?? '');
-    return /[",\n\r]/.test(s) ? `"${s.replace(/"/g,'""')}"` : s;
-  }
-  function downloadFullCsv(){
-    if(!journals.length) return;
-    const rawHeaders=[...new Set(journals.flatMap(j=>Object.keys(j.raw||{})))];
-    const headers=rawHeaders.length ? rawHeaders : ['Journal Title','Field','AJG 2024','AJG 2021'];
-    const rows=journals.map(j=>rawHeaders.length ? headers.map(h=>j.raw?.[h] ?? '') : [j.title,j.field,j.rating2024,j.rating2021]);
-    const csv='\uFEFF'+[headers,...rows].map(row=>row.map(csvEscape).join(',')).join('\r\n');
-    const blob=new Blob([csv],{type:'text/csv;charset=utf-8'});
-    const url=URL.createObjectURL(blob);
-    const a=document.createElement('a');
-    a.href=url; a.download='CABS-AJG-2024.csv';
-    document.body.appendChild(a); a.click(); a.remove();
-    setTimeout(()=>URL.revokeObjectURL(url),1000);
-  }
   searchInput.addEventListener('input',()=>applyFilters()); fieldFilter.addEventListener('change',()=>applyFilters()); ratingFilter.addEventListener('change',()=>applyFilters()); sortSelect.addEventListener('change',()=>applyFilters());
-  resetButton.addEventListener('click',reset); emptyReset.addEventListener('click',reset); downloadCsv.addEventListener('click',downloadFullCsv); prevPage.addEventListener('click',()=>{if(page>1){page--;render();window.scrollTo({top:document.querySelector('.results-section').offsetTop-70,behavior:'smooth'});}}); nextPage.addEventListener('click',()=>{if(page<Math.ceil(filtered.length/PAGE_SIZE)){page++;render();window.scrollTo({top:document.querySelector('.results-section').offsetTop-70,behavior:'smooth'});}});
+  resetButton.addEventListener('click',reset); emptyReset.addEventListener('click',reset); prevPage.addEventListener('click',()=>{if(page>1){page--;render();window.scrollTo({top:document.querySelector('.results-section').offsetTop-70,behavior:'smooth'});}}); nextPage.addEventListener('click',()=>{if(page<Math.ceil(filtered.length/PAGE_SIZE)){page++;render();window.scrollTo({top:document.querySelector('.results-section').offsetTop-70,behavior:'smooth'});}});
   document.addEventListener('keydown',e=>{if(e.key==='/' && document.activeElement.tagName!=='INPUT'){e.preventDefault();searchInput.focus();}});
 
   JOURNALS_READY.then(data=>{journals=data;populateFields();applyFilters();window.APP_JOURNALS=journals;}).catch(err=>{console.error(err);resultCount.textContent='Journal list unavailable';loadError.hidden=false;});
