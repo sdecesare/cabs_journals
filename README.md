@@ -1,15 +1,18 @@
-# ABS Journal Guide Explorer 2024
+# CABS / AJG 2024 Journal Explorer
 
-Static GitHub Pages app for browsing the AJG/ABS 2024 journal list.
+Complete static GitHub Pages app.
 
-## Required files in repository root
+Files required in the repository root:
 
 - `index.html`
 - `styles.css`
 - `app.js`
 - `data.js`
-- `CABS-AJG-2024.xlsx`
+- `CABS-AJG-2024.xlsx` (your existing workbook)
 
-The **Download CSV** button generates a CSV from the journal data already loaded by the app. The **Download Excel** control is a normal direct link to `CABS-AJG-2024.xlsx`.
+Important: delete any old `download.js` file from the repository. This version does not use SheetJS, XLSX, or any external Excel library.
 
-GitHub Pages paths are case-sensitive, so the Excel filename must match exactly.
+- **Download CSV** is generated from the journal data already loaded by the app.
+- **Download Excel** is a plain hyperlink to `CABS-AJG-2024.xlsx` in the same folder.
+
+If GitHub Pages still shows an old version after committing, hard-refresh the browser or open the site in a private/incognito window.
