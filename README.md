@@ -1,24 +1,15 @@
-# ABS / AJG Journal Explorer 2024
+# ABS Journal Guide Explorer 2024
 
-Complete static GitHub Pages app.
+Static GitHub Pages app for browsing the AJG/ABS 2024 journal list.
 
-## Files
-- `index.html` – page structure
-- `styles.css` – styling
-- `data.js` – AJG data loader
-- `app.js` – search, filters, sorting and pagination
-- `download.js` – full-list CSV / Excel downloads
+## Required files in repository root
 
-## Deploy on GitHub Pages
-1. Delete/replace the existing files in the repository root with all files from this folder.
-2. Commit to `main`.
-3. In **Settings → Pages**, choose **Deploy from a branch**, `main`, `/ (root)`.
+- `index.html`
+- `styles.css`
+- `app.js`
+- `data.js`
+- `CABS-AJG-2024.xlsx`
 
-## Downloads
-The **Download ABS/AJG 2024** button exports the complete dataset currently loaded by the app, not just filtered results.
+The **Download CSV** button generates a CSV from the journal data already loaded by the app. The **Download Excel** control is a normal direct link to `CABS-AJG-2024.xlsx`.
 
-## Data
-The app loads a public AJG 2024 CSV snapshot from GitHub at runtime. A fallback public AJG dataset is configured if the primary source is unavailable. Because of this, the site requires internet access (as GitHub Pages normally does).
-
-## Notes
-This is an independent interface and is not affiliated with or endorsed by the Chartered Association of Business Schools. Verify important publication decisions against the official AJG source.
+GitHub Pages paths are case-sensitive, so the Excel filename must match exactly.

@@ -75,12 +75,9 @@
             <span class="badge rank-4">4</span><span>Top</span>
             <span class="badge rank-3">3</span><span>Highly regarded</span>
           </div>
-          <div class="download-menu">
-            <button id="downloadToggle" class="download-button" type="button" aria-expanded="false">Download ABS/AJG 2024 ▾</button>
-            <div id="downloadOptions" class="download-options" hidden>
-              <button id="downloadCsv" type="button">Download CSV</button>
-              <button id="downloadExcel" type="button">Download Excel (.xlsx)</button>
-            </div>
+          <div class="download-actions" aria-label="Download ABS/AJG 2024 list">
+            <button id="downloadCsv" class="download-button" type="button">Download CSV</button>
+            <a class="download-button download-link" href="CABS-AJG-2024.xlsx" download>Download Excel</a>
           </div>
         </div>
       </div>
@@ -128,6 +125,5 @@
 
   <script src="data.js"></script>
   <script src="app.js"></script>
-  <script src="download.js"></script>
 </body>
 </html>
