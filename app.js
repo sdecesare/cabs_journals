@@ -9,6 +9,29 @@
   const rankValue = r => ({'4*':5,'4':4,'3':3,'2':2,'1':1}[String(r)] || 0);
   const esc = s => String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const badge = r => r ? `<span class="badge rank-${r==='4*'?'4star':esc(r)}">${esc(r)}</span>` : '—';
+  function profileLink(url, label, title){
+    try {
+      const parsed = new URL(url);
+      if (!['https:', 'http:'].includes(parsed.protocol)) return '';
+      return `<a href="${esc(parsed.href)}" target="_blank" rel="noopener noreferrer" aria-label="${esc(label)} profile for ${esc(title)} (opens in a new tab)">${esc(label)} <span aria-hidden="true">↗</span></a>`;
+    } catch { return ''; }
+  }
+  function journalRow(j){
+    const issns = [
+      j.printIssn ? `<div><span class="issn-label">Print</span> ${esc(j.printIssn)}</div>` : '',
+      j.eIssn ? `<div><span class="issn-label">Online</span> ${esc(j.eIssn)}</div>` : ''
+    ].filter(Boolean).join('');
+    const links = [profileLink(j.scopusUrl, 'Scopus', j.title), profileLink(j.webOfScienceUrl, 'Web of Science', j.title)].filter(Boolean).join('');
+    return `<tr>
+      <td class="field-cell" data-label="Field">${esc(j.field||'—')}</td>
+      <td class="journal-cell"><div class="journal-title">${esc(j.title)}</div></td>
+      <td class="issn-cell" data-label="ISSN">${issns||'—'}</td>
+      <td class="publisher-cell" data-label="Publisher">${esc(j.publisher||'—')}</td>
+      <td class="rating-cell center" data-label="AJG 2024">${badge(j.rating2024)}</td>
+      <td class="rating-cell center" data-label="AJG 2021">${badge(j.rating2021)}</td>
+      <td class="links-cell" data-label="Journal profiles"><div class="profile-links">${links||'—'}</div></td>
+    </tr>`;
+  }
 
   function populateFields(){
     const fields=[...new Set(journals.map(j=>j.field).filter(Boolean))].sort((a,b)=>a.localeCompare(b));
@@ -25,7 +48,7 @@
   function render(){
     const totalPages=Math.max(1,Math.ceil(filtered.length/PAGE_SIZE)); page=Math.min(page,totalPages);
     const slice=filtered.slice((page-1)*PAGE_SIZE,page*PAGE_SIZE);
-    resultsBody.innerHTML=slice.map(j=>`<tr><td><div class="journal-title">${esc(j.title)}</div></td><td>${esc(j.field||'—')}</td><td class="center">${badge(j.rating2024)}</td><td class="center historical">${badge(j.rating2021)}</td></tr>`).join('');
+    resultsBody.innerHTML=slice.map(journalRow).join('');
     resultCount.textContent=`${filtered.length.toLocaleString()} journal${filtered.length===1?'':'s'}`;
     resultContext.textContent=filtered.length===journals.length?'in the 2024 guide':'matching your filters';
     emptyState.hidden=filtered.length!==0;

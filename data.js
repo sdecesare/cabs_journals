@@ -45,6 +45,8 @@ function normalizeRows(rows) {
       printIssn: first(o,['printissn','issn']),
       eIssn: first(o,['eissn','electronicissn','onlineissn']),
       publisher: first(o,['publisher']),
+      scopusUrl: first(o,['scopusprofileurl']),
+      webOfScienceUrl: first(o,['webofscienceprofile','webofscienceprofileurl']),
       rating2024: rating(first(o,['ajg2024','rating','ajg','abs','rank'])),
       rating2021: rating(first(o,['ajg2021','rating2021','abs2021'])),
       raw
