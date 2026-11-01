@@ -25,12 +25,12 @@
       <div class="shell hero-inner">
         <p class="eyebrow">Academic Journal Guide · 2024</p>
         <h1>Find a journal in seconds.</h1>
-        <p class="hero-copy">Search the ABS/AJG 2024 list by journal title, ISSN, publisher or field, then narrow results by subject and rating.</p>
+        <p class="hero-copy">Search the ABS/AJG 2024 list by journal title or field, then narrow results by subject and rating.</p>
 
         <div class="search-card" role="search">
           <label class="search-box" for="searchInput">
             <span class="search-icon" aria-hidden="true">⌕</span>
-            <input id="searchInput" type="search" autocomplete="off" placeholder="Search journal title, ISSN, publisher or field…" />
+            <input id="searchInput" type="search" autocomplete="off" placeholder="Search journal title or field…" />
             <kbd>/</kbd>
           </label>
           <div class="filters">
@@ -66,8 +66,8 @@
     <section class="shell results-section">
       <div class="results-bar">
         <div>
-          <strong id="resultCount">1,822 journals</strong>
-          <span id="resultContext">in the 2024 guide</span>
+          <strong id="resultCount">Loading journals…</strong>
+          <span id="resultContext">from the 2024 guide</span>
         </div>
         <div class="results-actions">
           <div class="legend" aria-label="Rating legend">
@@ -75,25 +75,19 @@
             <span class="badge rank-4">4</span><span>Top</span>
             <span class="badge rank-3">3</span><span>Highly regarded</span>
           </div>
-
-          <details class="download-menu">
-            <summary class="download-button" aria-label="Download the complete ABS/AJG 2024 journal list">
-              <span class="download-icon" aria-hidden="true">↓</span>
-              Download ABS/AJG 2024
-              <span class="chevron" aria-hidden="true">▾</span>
-            </summary>
-            <div class="download-options">
-              <a href="https://github.com/flonat/flonat-research/raw/refs/heads/main/.context/resources/venue-rankings/abs_ajg_2024.csv">
-                <span><strong>CSV</strong><small>Spreadsheet-friendly text file</small></span>
-                <span class="file-type">.csv</span>
-              </a>
-              <a href="https://github.com/flonat/flonat-research/raw/refs/heads/main/.context/resources/venue-rankings/CABS-AJG-2024.xlsx">
-                <span><strong>Excel</strong><small>Microsoft Excel workbook</small></span>
-                <span class="file-type">.xlsx</span>
-              </a>
+          <div class="download-menu">
+            <button id="downloadToggle" class="download-button" type="button" aria-expanded="false">Download ABS/AJG 2024 ▾</button>
+            <div id="downloadOptions" class="download-options" hidden>
+              <button id="downloadCsv" type="button">Download CSV</button>
+              <button id="downloadExcel" type="button">Download Excel (.xlsx)</button>
             </div>
-          </details>
+          </div>
         </div>
+      </div>
+
+      <div id="loadError" class="load-error" hidden>
+        <strong>Could not load the journal list.</strong>
+        <p>Check your internet connection and reload the page. The app loads its AJG 2024 dataset from a public GitHub-hosted CSV.</p>
       </div>
 
       <div class="table-wrap">
@@ -102,11 +96,8 @@
             <tr>
               <th>Journal</th>
               <th>Field</th>
-              <th>Publisher</th>
               <th class="center">AJG 2024</th>
-              <th class="center historical">2021</th>
-              <th>ISSN</th>
-              <th class="center">Links</th>
+              <th class="center historical">AJG 2021</th>
             </tr>
           </thead>
           <tbody id="resultsBody"></tbody>
@@ -127,17 +118,17 @@
 
       <aside class="source-note">
         <h2>About this explorer</h2>
-        <p>This is a simple browser for the supplied Academic Journal Guide / ABS journal list. Ratings are displayed on the familiar AJG scale, where the source value 5 is shown as 4*. Historical ratings and external profile links are included when available.</p>
-        <p class="small">Independent search interface; not affiliated with or endorsed by the Chartered Association of Business Schools. Verify important publication decisions against the official source.</p>
+        <p>This is an independent browser for the Academic Journal Guide / ABS journal list. Ratings use the familiar AJG scale from 1 to 4*.</p>
+        <p class="small">Not affiliated with or endorsed by the Chartered Association of Business Schools. Verify important publication decisions against the official source.</p>
       </aside>
     </section>
   </main>
 
-  <footer>
-    <div class="shell">Built as a static site for GitHub Pages · No login · No tracking · No backend</div>
-  </footer>
+  <footer><div class="shell">Static site for GitHub Pages · No login · No tracking · No backend</div></footer>
 
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
   <script src="data.js"></script>
   <script src="app.js"></script>
+  <script src="download.js"></script>
 </body>
 </html>
